@@ -27,10 +27,22 @@ public class User {
   @Size(max = 50)
   @Email
   private String email;
-
+  
   @NotBlank
   @Size(max = 120)
   private String password;
+
+  @NotBlank
+  @Size(max = 120)
+  private String nom;
+  
+  @NotBlank
+  @Size(max = 120)
+  private String prenom;
+  
+  @NotBlank
+  @Size(max = 120)
+  private String passport;
 
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(  name = "user_roles", 
@@ -41,10 +53,13 @@ public class User {
   public User() {
   }
 
-  public User(String username, String email, String password) {
+  public User(String username, String email, String password, String nom, String prenom, String passport) {
     this.username = username;
     this.email = email;
     this.password = password;
+    this.passport = passport;
+    this.nom = nom;
+    this.prenom = prenom;
   }
 
   public Long getId() {
