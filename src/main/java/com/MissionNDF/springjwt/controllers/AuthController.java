@@ -67,23 +67,19 @@ public class AuthController {
 
     return ResponseEntity.ok(new JwtResponse(jwt, 
                          userDetails.getId(), 
-                         userDetails.getUsername(), 
+                         userDetails.getEmail(),
                          userDetails.getEmail(), 
                          roles));
   }
 
   @PostMapping("/signup")
-  public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-      return ResponseEntity
-          .badRequest()
-          .body(new MessageResponse("Error: Email is already in use!"));
-    }
+  public User registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+
 
     // Create new user's account
-    User user = new User(signUpRequest.getEmail(), 
+    User user = new User(signUpRequest.getEmail(),
                signUpRequest.getEmail(),
-               encoder.encode(signUpRequest.getEmail()), signUpRequest.getNom(), signUpRequest.getPrenom(), signUpRequest.getPassport());
+               encoder.encode(signUpRequest.getPassword()), signUpRequest.getNom(), signUpRequest.getPrenom(), signUpRequest.getPassport());
 
     Set<String> strRoles = signUpRequest.getRole();
     Set<Role> roles = new HashSet<>();
@@ -120,6 +116,12 @@ public class AuthController {
           roles.add(assistRole);
 
           break;
+          case "collaborateur":
+            Role collaborateurRolee = roleRepository.findByName(ERole.ROLE_COLLABORATEUR)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(collaborateurRolee);
+
+            break;
         default:
           Role collaborateurRole = roleRepository.findByName(ERole.ROLE_COLLABORATEUR)
               .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -129,8 +131,9 @@ public class AuthController {
     }
 
     user.setRoles(roles);
-    userRepository.save(user);
+    return userRepository.save(user);
 
-    return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+
+   // return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }
 }

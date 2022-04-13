@@ -3,15 +3,6 @@ package com.MissionNDF.springjwt.payload.request;
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
-	@NotBlank
-  private String username;
-
-	@NotBlank
-	private String password;
-
-	
-
-
 	public String getUsername() {
 		return username;
 	}
@@ -19,6 +10,18 @@ public class LoginRequest {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	@NotBlank
+  private String username;
+
+
+
+	@NotBlank
+	private String password;
+
+	
+
+
 
 	public String getPassword() {
 		return password;
