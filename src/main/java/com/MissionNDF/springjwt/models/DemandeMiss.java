@@ -16,17 +16,75 @@ import javax.persistence.Table;
 @Entity
 @Table(name ="Mission")
 public class DemandeMiss  {
-	   @Id
-	   @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long IdMission;
-    private String nom;
-    private String passport;
-    private String Description;
-    private LocalDate DateDeDebut;
-    private LocalDate DateDeFin;
-    private String Pays;
-    private String Ville;
-    private String Etat;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long idMission;
+	private String nom;
+	private String passport;
+	private String description;
+	private LocalDate dateDeDebut;
+	private LocalDate dateDeFin;
+	private String pays;
+	private String ville;
+	private String etat;
+
+	public Long getIdMission() {
+		return idMission;
+	}
+
+	public void setIdMission(Long idMission) {
+		this.idMission = idMission;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public LocalDate getDateDeDebut() {
+		return dateDeDebut;
+	}
+
+	public void setDateDeDebut(LocalDate dateDeDebut) {
+		this.dateDeDebut = dateDeDebut;
+	}
+
+	public LocalDate getDateDeFin() {
+		return dateDeFin;
+	}
+
+	public void setDateDeFin(LocalDate dateDeFin) {
+		this.dateDeFin = dateDeFin;
+	}
+
+	public String getPays() {
+		return pays;
+	}
+
+	public void setPays(String pays) {
+		this.pays = pays;
+	}
+
+	public String getVille() {
+		return ville;
+	}
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+
+	public String getEtat() {
+		return etat;
+	}
+
+	public void setEtat(String etat) {
+		this.etat = etat;
+	}
+
+
     
 
 	
@@ -36,32 +94,9 @@ public class DemandeMiss  {
 	//@OneToOne(cascade = CascadeType.ALL)
     //private NDF NFDMission;
 	
+
 	
-	public Long getIdMission() {
-		return IdMission;
-	}
-	public void setIdMission(Long idMission) {
-		IdMission = idMission;
-	}
-	
-	public String getDescription() {
-		return Description;
-	}
-	public void setDescription(String description) {
-		Description = description;
-	}
-	public LocalDate getDateDeDebut() {
-		return DateDeDebut;
-	}
-	public void setDateDeDebut(LocalDate dateDeDebut) {
-		DateDeDebut = dateDeDebut;
-	}
-	public LocalDate getDateDeFin() {
-		return DateDeFin;
-	}
-	public void setDateDeFin(LocalDate dateDeFin) {
-		DateDeFin = dateDeFin;
-	}
+
 
 	public String getNom() {
 		return nom;
@@ -79,27 +114,6 @@ public class DemandeMiss  {
 		this.passport = passport;
 	}
 
-	public String getPays() {
-		return Pays;
-	}
 
-	public void setPays(String pays) {
-		Pays = pays;
-	}
-
-	public String getVille() {
-		return Ville;
-	}
-
-	public void setVille(String ville) {
-		Ville = ville;
-	}
-
-	public String getEtat() {
-		return Etat;
-	}
-	public void setEtat(String etat) {
-		Etat = etat;
-	}
 }
 

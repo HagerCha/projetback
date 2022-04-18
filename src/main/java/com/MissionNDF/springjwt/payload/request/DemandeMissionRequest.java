@@ -7,23 +7,30 @@ import javax.validation.constraints.NotBlank;
 
 public class DemandeMissionRequest {
 	@NotBlank
-	  private long IdMission;
+	  private long idMission;
 	
 	@NotBlank
 	  private String nom;
 	@NotBlank
 	  private String passport;
 	@NotBlank
-	  private String Description;
+	  private String description;
 	@NotBlank
-	  private LocalDate DateDeDebut;
+	  private LocalDate dateDeDebut;
 	@NotBlank
-	  private LocalDate DateDeFin;
+	  private LocalDate dateDeFin;
+	@NotBlank
+	private String pays;
+	@NotBlank
+	private String ville;
+	@NotBlank
+	private String etat;
+
 	public long getIdMission() {
-		return IdMission;
+		return idMission;
 	}
 	public void setIdMission(long idMission) {
-		IdMission = idMission;
+		idMission = idMission;
 	}
 	public String getNom() {
 		return nom;
@@ -38,46 +45,40 @@ public class DemandeMissionRequest {
 		this.passport = passport;
 	}
 	public String getDescription() {
-		return Description;
+		return description;
 	}
 	public void setDescription(String description) {
-		Description = description;
+		description = description;
 	}
 	public LocalDate getDateDeDebut() {
-		return DateDeDebut;
+		return dateDeDebut;
 	}
 	public void setDateDeDebut(LocalDate dateDeDebut) {
-		DateDeDebut = dateDeDebut;
+		dateDeDebut = dateDeDebut;
 	}
 	public LocalDate getDateDeFin() {
-		return DateDeFin;
+		return dateDeFin;
 	}
 	public void setDateDeFin(LocalDate dateDeFin) {
-		DateDeFin = dateDeFin;
+		dateDeFin = dateDeFin;
 	}
 	public String getPays() {
-		return Pays;
+		return pays;
 	}
 	public void setPays(String pays) {
-		Pays = pays;
+		pays = pays;
 	}
 	public String getVille() {
-		return Ville;
+		return ville;
 	}
 	public void setVille(String ville) {
-		Ville = ville;
+		ville = ville;
 	}
 	public String getEtat() {
-		return Etat;
+		return etat;
 	}
 	public void setEtat(String etat) {
-		Etat = etat;
+		etat = etat;
 	}
-	@NotBlank
-	  private String Pays;
-	@NotBlank
-	  private String Ville;
-	@NotBlank
-	  private String Etat;
-		
+
 }
