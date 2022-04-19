@@ -14,6 +14,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -41,34 +42,30 @@ public class DemandeMissionControle {
 //suprimer mission
     @DeleteMapping ("/DeleteMission/{IdMission}")
     @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
-    public String deleteMMission(@PathVariable Long IdMission) throws NotFoundException {
-        return demandeMissionRepositorysitory.findById(IdMission)
+    public String deleteMMission(@PathVariable Long idMission) throws NotFoundException {
+        return demandeMissionRepositorysitory.findById(idMission)
                 .map(mission -> {
                     demandeMissionRepositorysitory.delete(mission);
                     return "Mission  a été supprimé avec succés!";
-                }).orElseThrow(() -> new RuntimeException(" Mission avec  id=" + IdMission + " n'existe pas!"));
+                }).orElseThrow(() -> new RuntimeException(" Mission avec  id=" + idMission + " n'existe pas!"));
     }
 
 
    //ajouter mission
 
 
-    /*public ResponseEntity<DemandeMiss> createTutorial(@RequestBody DemandeMiss demandeMiss) {
-        try {
-            DemandeMiss mission = DemandeMissionRepository
-                    .save(new DemandeMiss(demandeMiss.getDateDeDebut(), demandeMiss.getDescription(),demandeMiss.getDateDeFin(),
-                            demandeMiss.getEtat(),demandeMiss.getNom(),demandeMiss.getPassport(),demandeMiss.getVille(),
-                            demandeMiss.getPays()));
-            return new ResponseEntity<>(mission, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
+
+
+    @GetMapping("/MissionByIdUser/{idMission}")
+    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
+    public Optional<DemandeMiss> getMembreDeCommitionByIdUser(@PathVariable Long idMission) throws NotFoundException{
+
+        if(!demandeMissionRepositorysitory.existsById(idMission)) {
+            throw new RuntimeException("Le membre de commition avec l'id="+idMission+" n'existe pas!");
         }
-        }
-    }*/
-
-
-
-
+        return demandeMissionRepositorysitory.findById(idMission);
+    }
 
 
 
@@ -85,14 +82,14 @@ public class DemandeMissionControle {
         return "Mission  a été ajoute avec succés!";
 
     }
-    @PutMapping("/modifierMembre/{IdMission}")
+    @PutMapping("/modifierMembre/{idMission}")
     @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
-    public DemandeMiss updateMission(@PathVariable Long IdMission, @Valid  @RequestBody DemandeMiss missionUpdate) throws NotFoundException{
+    public DemandeMiss updateMission(@PathVariable Long idMission, @Valid  @RequestBody DemandeMiss missionUpdate) throws NotFoundException{
 
-        if(!demandeMissionRepositorysitory.existsById(IdMission)) {
-            throw new RuntimeException("La mission  avec l'id="+IdMission+" n'existe pas!");
+        if(!demandeMissionRepositorysitory.existsById(idMission)) {
+            throw new RuntimeException("La mission  avec l'id="+idMission+" n'existe pas!");
         }
-        return demandeMissionRepositorysitory.findById(IdMission)
+        return demandeMissionRepositorysitory.findById(idMission)
                 .map(mission -> {
                     mission.setNom(missionUpdate.getNom());
                     mission.setDescription(missionUpdate.getDescription());
