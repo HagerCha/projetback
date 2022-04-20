@@ -40,7 +40,7 @@ public class DemandeMissionControle {
     }
 
 //suprimer mission
-    @DeleteMapping ("/DeleteMission/{IdMission}")
+    @DeleteMapping ("/DeleteMission/{idMission}")
     @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
     public String deleteMMission(@PathVariable Long idMission) throws NotFoundException {
         return demandeMissionRepositorysitory.findById(idMission)
@@ -55,11 +55,11 @@ public class DemandeMissionControle {
 
 
 
-
+//foundById
 
     @GetMapping("/MissionByIdUser/{idMission}")
     @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
-    public Optional<DemandeMiss> getMembreDeCommitionByIdUser(@PathVariable Long idMission) throws NotFoundException{
+    public Optional<DemandeMiss> getMissionByIdUser(@PathVariable Long idMission) throws NotFoundException{
 
         if(!demandeMissionRepositorysitory.existsById(idMission)) {
             throw new RuntimeException("Le membre de commition avec l'id="+idMission+" n'existe pas!");
@@ -70,7 +70,7 @@ public class DemandeMissionControle {
 
 
 
-
+    //ajouter mission
 
 
     @PostMapping("/addMission")
