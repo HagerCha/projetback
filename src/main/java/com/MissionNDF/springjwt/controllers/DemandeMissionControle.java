@@ -33,7 +33,9 @@ public class DemandeMissionControle {
     DemandeMissionRepository demandeMissionRepositorysitory;
 //affiche tout les mission
     @GetMapping("/AllMission")
-    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')" + " || hasRole('ROLE_MANAGER')")
+    
+
     public Collection<DemandeMiss> getAllAllMission() throws NotFoundException {
 
         return demandeMissionRepositorysitory.findAll();
@@ -82,7 +84,7 @@ public class DemandeMissionControle {
         return "Mission  a été ajoute avec succés!";
 
     }
-    @PutMapping("/modifierMembre/{idMission}")
+    @PutMapping("/modifierMission/{idMission}")
     @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
     public DemandeMiss updateMission(@PathVariable Long idMission, @Valid  @RequestBody DemandeMiss missionUpdate) throws NotFoundException{
 
