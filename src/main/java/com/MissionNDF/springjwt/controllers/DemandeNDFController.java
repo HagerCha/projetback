@@ -29,7 +29,7 @@ public class DemandeNDFController {
     
 //affiche toutes les notes de frais
     @GetMapping("/AllNDF")
-    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')" + " || hasRole('ROLE_PAIE')")
     public Collection<DemandeNDF> getAllAllNDF() throws NotFoundException {
 
         return demandeNDFRepositorysitory.findAll();
