@@ -20,20 +20,28 @@ public class UserDetailsImpl implements UserDetails {
   private String username;
 
   private String email;
-
+  
+  private String nom;
+  
+  private String prenom;
+  
+  private String passport;
+  
+  private String roleUtilisateur;
+  
   @JsonIgnore
   private String password;
 
   private Collection<? extends GrantedAuthority> authorities;
 
-  public UserDetailsImpl(Long id, String username, String email, String password,
+  public UserDetailsImpl(Long id, String username, String email, String password, String nom, String prenom, String passport, String roleUtilisateur,
       Collection<? extends GrantedAuthority> authorities) {
     this.id = id;
     this.username = username;
     this.email = email;
     this.password = password;
     this.authorities = authorities;
-  }
+   }
 
   public static UserDetailsImpl build(User user) {
     List<GrantedAuthority> authorities = user.getRoles().stream()
@@ -45,6 +53,10 @@ public class UserDetailsImpl implements UserDetails {
         user.getUsername(), 
         user.getEmail(),
         user.getPassword(), 
+        user.getNom(),
+        user.getPrenom(),
+        user.getPassport(),
+        user.getRoleUtilisateur(),
         authorities);
   }
 
@@ -70,8 +82,34 @@ public class UserDetailsImpl implements UserDetails {
   public String getUsername() {
     return username;
   }
+  
+  
 
-  @Override
+  public String getNom() {
+	return nom;
+}
+
+public void setNom(String nom) {
+	this.nom = nom;
+}
+
+public String getPrenom() {
+	return prenom;
+}
+
+public void setPrenom(String prenom) {
+	this.prenom = prenom;
+}
+
+public String getPassport() {
+	return passport;
+}
+
+public void setPassport(String passport) {
+	this.passport = passport;
+}
+
+@Override
   public boolean isAccountNonExpired() {
     return true;
   }
@@ -90,8 +128,17 @@ public class UserDetailsImpl implements UserDetails {
   public boolean isEnabled() {
     return true;
   }
+  
 
-  @Override
+  public String getRoleUtilisateur() {
+	return roleUtilisateur;
+}
+
+public void setRoleUtilisateur(String roleUtilisateur) {
+	this.roleUtilisateur = roleUtilisateur;
+}
+
+@Override
   public boolean equals(Object o) {
     if (this == o)
       return true;

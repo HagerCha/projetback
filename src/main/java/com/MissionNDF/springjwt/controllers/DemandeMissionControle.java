@@ -21,17 +21,11 @@ import java.util.Optional;
 @RequestMapping("/api/mission/")
 public class DemandeMissionControle {
 
-
-
-
-
-
-
-
     @Autowired
 
     DemandeMissionRepository demandeMissionRepositorysitory;
-//affiche tout les mission
+    
+//afficher toutes les missions
     @GetMapping("/AllMission")
     @PreAuthorize("hasRole('ROLE_COLLABORATEUR')" + " || hasRole('ROLE_MANAGER')")
     
@@ -41,9 +35,9 @@ public class DemandeMissionControle {
         return demandeMissionRepositorysitory.findAll();
     }
 
-//suprimer mission
+//supprimer mission
     @DeleteMapping ("/DeleteMission/{idMission}")
-    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')" + " || hasRole('ROLE_MANAGER')")
     public String deleteMMission(@PathVariable Long idMission) throws NotFoundException {
         return demandeMissionRepositorysitory.findById(idMission)
                 .map(mission -> {
@@ -53,14 +47,13 @@ public class DemandeMissionControle {
     }
 
 
-   //ajouter mission
 
 
 
 //foundById
 
     @GetMapping("/MissionByIdUser/{idMission}")
-    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')" + " || hasRole('ROLE_MANAGER')")
     public Optional<DemandeMiss> getMissionByIdUser(@PathVariable Long idMission) throws NotFoundException{
 
         if(!demandeMissionRepositorysitory.existsById(idMission)) {
@@ -76,7 +69,7 @@ public class DemandeMissionControle {
 
 
     @PostMapping("/addMission")
-    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')" + " || hasRole('ROLE_MANAGER')")
     public String  c (@RequestBody  DemandeMiss mission){
 
          demandeMissionRepositorysitory.save(mission) ;
@@ -84,6 +77,8 @@ public class DemandeMissionControle {
         return "Mission  a été ajoute avec succés!";
 
     }
+    
+    //modifier mission
     @PutMapping("/modifierMission/{idMission}")
     @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
     public DemandeMiss updateMission(@PathVariable Long idMission, @Valid  @RequestBody DemandeMiss missionUpdate) throws NotFoundException{
@@ -106,6 +101,8 @@ public class DemandeMissionControle {
                     return demandeMissionRepositorysitory.save(mission);
                 }).orElseThrow(() -> new NotFoundException());
     }
+    
+    
     }
 
 

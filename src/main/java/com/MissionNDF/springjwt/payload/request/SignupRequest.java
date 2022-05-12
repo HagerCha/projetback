@@ -13,6 +13,28 @@ public class SignupRequest {
   @Size(min = 3, max = 20)
   private String prenom;
   
+
+@NotBlank
+  @Size(min = 3, max = 20)
+  private String passport;
+
+
+@NotBlank
+  @Size(max = 50)
+  @Email
+  private String email;
+
+  private Set<String> role;
+
+  @NotBlank
+  @Size(min = 6, max = 40)
+  private String password;
+
+  @NotBlank
+  @Size(min = 4, max = 40)
+  private String roleUtilisateur;
+
+  
   public String getNom() {
 	return nom;
 }
@@ -32,10 +54,6 @@ public void setPrenom(String prenom) {
 	this.prenom = prenom;
 }
 
-@NotBlank
-  @Size(min = 3, max = 20)
-  private String passport;
-
   public String getPassport() {
 	return passport;
 }
@@ -44,18 +62,6 @@ public void setPrenom(String prenom) {
 public void setPassport(String passport) {
 	this.passport = passport;
 }
-
-@NotBlank
-  @Size(max = 50)
-  @Email
-  private String email;
-
-  private Set<String> role;
-
-  @NotBlank
-  @Size(min = 6, max = 40)
-  private String password;
-
  
 
   public String getEmail() {
@@ -81,4 +87,14 @@ public void setPassport(String passport) {
   public void setRole(Set<String> role) {
     this.role = role;
   }
+
+
+public String getRoleUtilisateur() {
+	return roleUtilisateur;
+}
+
+public void setRoleUtilisateur(String roleUtilisateur) {
+	this.roleUtilisateur = roleUtilisateur;
+}
+  
 }

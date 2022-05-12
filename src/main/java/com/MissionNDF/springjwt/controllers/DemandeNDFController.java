@@ -35,9 +35,9 @@ public class DemandeNDFController {
         return demandeNDFRepositorysitory.findAll();
     }
 
-//suprimer NDF
+//supprimer NDF
     @DeleteMapping ("/DeleteNDF/{idNDF}")
-    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')" + " || hasRole('ROLE_PAIE')")
     public String deleteNDF(@PathVariable Long idNDF) throws NotFoundException {
         return demandeNDFRepositorysitory.findById(idNDF)
                 .map(NDF -> {
@@ -47,14 +47,11 @@ public class DemandeNDFController {
     }
 
 
-   //ajouter NDF
-
-
 
 //foundById
 
     @GetMapping("/NDFByIdUser/{idNDF}")
-    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')" + " || hasRole('ROLE_PAIE')")
     public Optional<DemandeNDF> getNDFByIdUser(@PathVariable Long idNDF) throws NotFoundException{
 
         if(!demandeNDFRepositorysitory.existsById(idNDF)) {
@@ -70,7 +67,7 @@ public class DemandeNDFController {
 
 
     @PostMapping("/addNDF")
-    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')" + " || hasRole('ROLE_PAIE')")
     public String  c (@RequestBody  DemandeNDF NDF){
 
          demandeNDFRepositorysitory.save(NDF) ;
@@ -79,7 +76,7 @@ public class DemandeNDFController {
 
     }
     @PutMapping("/modifierNDF/{idNDF}")
-    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')" + " || hasRole('ROLE_PAIE')")
     public DemandeNDF updateNDF(@PathVariable Long idNDF, @Valid  @RequestBody DemandeNDF NDFUpdate) throws NotFoundException{
 
         if(!demandeNDFRepositorysitory.existsById(idNDF)) {

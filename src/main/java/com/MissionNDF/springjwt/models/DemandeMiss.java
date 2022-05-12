@@ -84,20 +84,6 @@ public class DemandeMiss  {
 		this.etat = etat;
 	}
 
-
-    
-
-	
-	//@OneToMany(mappedBy = "Mission")
-    //private List<Reservation> ListReservation;
-	
-	//@OneToOne(cascade = CascadeType.ALL)
-    //private NDF NFDMission;
-	
-
-	
-
-
 	public String getNom() {
 		return nom;
 	}

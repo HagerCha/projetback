@@ -3,6 +3,7 @@ package com.MissionNDF.springjwt.controllers;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,7 @@ import com.MissionNDF.springjwt.models.DemandeMiss;
 import com.MissionNDF.springjwt.repository.DemandeMissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -52,6 +54,7 @@ public class AuthController {
   @Autowired
   JwtUtils jwtUtils;
 
+  //login
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -70,8 +73,7 @@ public class AuthController {
                          userDetails.getId(), 
                          userDetails.getUsername(),
                          userDetails.getEmail(),
-                        
-                         roles, null, null, null));
+                         roles, null, null, null, jwt));
   }
 
   @PostMapping("/signup")
@@ -79,11 +81,50 @@ public class AuthController {
 
 
     // Create new user's account
-    User user = new User(signUpRequest.getEmail(),
-               signUpRequest.getEmail(),
-               encoder.encode(signUpRequest.getPassword()), signUpRequest.getNom(), signUpRequest.getPrenom(), signUpRequest.getPassport());
+    User user = new User(signUpRequest.getEmail(), signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()),
+    		signUpRequest.getNom(), signUpRequest.getPrenom(), signUpRequest.getPassport(), signUpRequest.getRoleUtilisateur());
+    
+    String strRole = signUpRequest.getRoleUtilisateur();
+    Set<Role> roles = new HashSet<>();
 
-    Set<String> strRoles = signUpRequest.getRole();
+    
+    switch (strRole.toUpperCase()) {
+    case "ADMIN":
+      Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+          .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+      roles.add(adminRole);
+
+      break;
+  
+    case "MANAGER":
+        Role managerRole = roleRepository.findByName(ERole.ROLE_MANAGER)
+            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        roles.add(managerRole);
+
+        break;
+    case "GESTIONNAIRE DE PAIE":
+        Role paieRole = roleRepository.findByName(ERole.ROLE_PAIE)
+            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        roles.add(paieRole);
+
+        break;
+    case "ASSISTANT DE RESERVATION":
+      Role assistRole = roleRepository.findByName(ERole.ROLE_ASSIST)
+          .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+      roles.add(assistRole);
+
+      break;
+      case "COLLABORATEUR":
+        Role collaborateurRolee = roleRepository.findByName(ERole.ROLE_COLLABORATEUR)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        roles.add(collaborateurRolee);
+        break;
+    
+    };
+      
+    
+    
+    /*Set<String> strRoles = signUpRequest.getRole();
     Set<Role> roles = new HashSet<>();
 
     if (strRoles == null) {
@@ -132,7 +173,8 @@ public class AuthController {
       });
     }
 
-    user.setRoles(roles);
+    user.setRoles(roles);*/
+      
     return userRepository.save(user);
 
 
@@ -142,13 +184,58 @@ public class AuthController {
 
 
 
-  //affiche tout les mission
+  //afficher tous les utilisateurs
   @GetMapping("/AllUser")
-  @PreAuthorize("hasRole('ROLE_COLLABORATEUR')" + " || hasRole('ROLE_MANAGER')")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
 
 
   public Collection<User> getAllUser() throws ChangeSetPersister.NotFoundException {
 
     return userRepository.findAll();
+  }
+  
+
+//foundById
+
+  @GetMapping("/UserByIdUser/{idUser}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  public Optional<User> getUserByIdUser(@PathVariable Long idUser) throws NotFoundException{
+
+      if(!userRepository.existsById(idUser)) {
+          throw new RuntimeException("Le membre de commition avec l'id="+idUser+" n'existe pas!");
+      }
+      return userRepository.findById(idUser);
+  }
+
+//supprimer user
+  @DeleteMapping ("/DeleteUser/{idUser}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  public String deleteUser(@PathVariable Long idUser) throws NotFoundException {
+      return userRepository.findById(idUser)
+              .map(mission -> {
+            	  userRepository.deleteById(idUser);
+                  return "Utilisateur  a été supprimé avec succés!";
+              }).orElseThrow(() -> new RuntimeException(" Mission avec  id=" + idUser + " n'existe pas!"));
+  }
+  
+  //modifier user
+  @PutMapping("/modifierUser/{idUser}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  public User updateUser(@PathVariable Long idUser, @Valid  @RequestBody User userUpdate) throws NotFoundException{
+
+      if(!userRepository.existsById(idUser)) {
+          throw new RuntimeException("La mission  avec l'id="+idUser+" n'existe pas!");
+      }
+      return userRepository.findById(idUser)
+              .map(user -> {
+                  user.setNom(userUpdate.getNom());
+                  user.setPrenom(userUpdate.getPrenom());
+                  user.setEmail(userUpdate.getEmail());
+                  user.setPassport(userUpdate.getPassport());
+                  user.setPassword(userUpdate.getPassword());
+            
+                  
+                  return userRepository.save(user);
+              }).orElseThrow(() -> new NotFoundException());
   }
 }
