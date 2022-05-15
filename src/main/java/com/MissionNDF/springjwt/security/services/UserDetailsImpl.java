@@ -27,14 +27,13 @@ public class UserDetailsImpl implements UserDetails {
   
   private String passport;
   
-  private String roleUtilisateur;
   
   @JsonIgnore
   private String password;
 
   private Collection<? extends GrantedAuthority> authorities;
 
-  public UserDetailsImpl(Long id, String username, String email, String password, String nom, String prenom, String passport, String roleUtilisateur,
+  public UserDetailsImpl(Long id, String username, String email, String password, String nom, String prenom, String passport,
       Collection<? extends GrantedAuthority> authorities) {
     this.id = id;
     this.username = username;
@@ -56,7 +55,6 @@ public class UserDetailsImpl implements UserDetails {
         user.getNom(),
         user.getPrenom(),
         user.getPassport(),
-        user.getRoleUtilisateur(),
         authorities);
   }
 
@@ -129,15 +127,6 @@ public void setPassport(String passport) {
     return true;
   }
   
-
-  public String getRoleUtilisateur() {
-	return roleUtilisateur;
-}
-
-public void setRoleUtilisateur(String roleUtilisateur) {
-	this.roleUtilisateur = roleUtilisateur;
-}
-
 @Override
   public boolean equals(Object o) {
     if (this == o)

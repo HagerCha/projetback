@@ -30,10 +30,6 @@ public class SignupRequest {
   @Size(min = 6, max = 40)
   private String password;
 
-  @NotBlank
-  @Size(min = 4, max = 40)
-  private String roleUtilisateur;
-
   
   public String getNom() {
 	return nom;
@@ -87,14 +83,5 @@ public void setPassport(String passport) {
   public void setRole(Set<String> role) {
     this.role = role;
   }
-
-
-public String getRoleUtilisateur() {
-	return roleUtilisateur;
-}
-
-public void setRoleUtilisateur(String roleUtilisateur) {
-	this.roleUtilisateur = roleUtilisateur;
-}
   
 }

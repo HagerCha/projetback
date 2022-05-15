@@ -73,21 +73,22 @@ public class AuthController {
                          userDetails.getId(), 
                          userDetails.getUsername(),
                          userDetails.getEmail(),
-                         roles, null, null, null, jwt));
+                         roles, null, null, jwt));
   }
 
+  
+  //signup
   @PostMapping("/signup")
   public User registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 
 
     // Create new user's account
     User user = new User(signUpRequest.getEmail(), signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()),
-    		signUpRequest.getNom(), signUpRequest.getPrenom(), signUpRequest.getPassport(), signUpRequest.getRoleUtilisateur());
+    		signUpRequest.getNom(), signUpRequest.getPrenom(), signUpRequest.getPassport());
     
-    String strRole = signUpRequest.getRoleUtilisateur();
+    
+    /*String strRole = signUpRequest.getRoleUtilisateur();
     Set<Role> roles = new HashSet<>();
-
-    
     switch (strRole.toUpperCase()) {
     case "ADMIN":
       Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
@@ -120,11 +121,11 @@ public class AuthController {
         roles.add(collaborateurRolee);
         break;
     
-    };
+    };*/
       
     
     
-    /*Set<String> strRoles = signUpRequest.getRole();
+    Set<String> strRoles = signUpRequest.getRole();
     Set<Role> roles = new HashSet<>();
 
     if (strRoles == null) {
@@ -173,7 +174,7 @@ public class AuthController {
       });
     }
 
-    user.setRoles(roles);*/
+    user.setRoles(roles);
       
     return userRepository.save(user);
 

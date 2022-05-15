@@ -67,7 +67,7 @@ public class DemandeNDFController {
 
 
     @PostMapping("/addNDF")
-    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')" + " || hasRole('ROLE_PAIE')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATEUR')")
     public String  c (@RequestBody  DemandeNDF NDF){
 
          demandeNDFRepositorysitory.save(NDF) ;
@@ -75,10 +75,13 @@ public class DemandeNDFController {
         return "Note de frais  a été ajoute avec succés!";
 
     }
+    
+    //modifier NDF
+    
     @PutMapping("/modifierNDF/{idNDF}")
     @PreAuthorize("hasRole('ROLE_COLLABORATEUR')" + " || hasRole('ROLE_PAIE')")
     public DemandeNDF updateNDF(@PathVariable Long idNDF, @Valid  @RequestBody DemandeNDF NDFUpdate) throws NotFoundException{
-
+    	
         if(!demandeNDFRepositorysitory.existsById(idNDF)) {
             throw new RuntimeException("La NDF  avec l'id="+idNDF+" n'existe pas!");
         }
@@ -88,16 +91,14 @@ public class DemandeNDFController {
                     NDF.setNumMission(NDFUpdate.getNumMission());
                     NDF.setNbNuit(NDFUpdate.getNbNuit());
                     NDF.setMontantNuit(NDFUpdate.getMontantNuit());
-                    NDF.setMontantDP(NDFUpdate.getMontantDP());
-                    NDF.setMontantPC(NDFUpdate.getMontantPC());
                     NDF.setTransport(NDFUpdate.getTransport());
                     NDF.setMontantTransport(NDFUpdate.getMontantTransport());
                     NDF.setDateArrivee(NDFUpdate.getDateArrivee());
                     NDF.setDateRetour(NDFUpdate.getDateArrivee());
                     NDF.setCompagnie(NDFUpdate.getCompagnie());
                     NDF.setMontantVoyage(NDFUpdate.getMontantVoyage());
-
-                    
+                    NDF.setTotal(NDFUpdate.getTotal());
+                    NDF.setEtat(NDFUpdate.getEtat());
 
                     return demandeNDFRepositorysitory.save(NDF);
                 }).orElseThrow(() -> new NotFoundException());

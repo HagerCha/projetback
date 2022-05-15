@@ -20,17 +20,17 @@ public class DemandeNDF  {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idNDF;
 	private String nom;
-	private String numMission;
+	private int numMission;
 	private float nbNuit;
 	private float montantNuit;
-	private float montantDP;
-	private float montantPC;
 	private String transport;
 	private float montantTransport;
 	private LocalDate dateArrivee;
 	private LocalDate dateRetour;
 	private String compagnie;
 	private float montantVoyage;
+	private String etat;
+	private float total;
 	
 	
 	public Long getIdNDF() {
@@ -45,10 +45,10 @@ public class DemandeNDF  {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public String getNumMission() {
+	public int getNumMission() {
 		return numMission;
 	}
-	public void setNumMission(String numMission) {
+	public void setNumMission(int numMission) {
 		this.numMission = numMission;
 	}
 	
@@ -76,18 +76,7 @@ public class DemandeNDF  {
 	public void setMontantNuit(float montantNuit) {
 		this.montantNuit = montantNuit;
 	}
-	public float getMontantDP() {
-		return montantDP;
-	}
-	public void setMontantDP(float montantDP) {
-		this.montantDP = montantDP;
-	}
-	public float getMontantPC() {
-		return montantPC;
-	}
-	public void setMontantPC(float montantPC) {
-		this.montantPC = montantPC;
-	}
+	
 	public String getTransport() {
 		return transport;
 	}
@@ -113,6 +102,17 @@ public class DemandeNDF  {
 	public void setMontantVoyage(float montantVoyage) {
 		this.montantVoyage = montantVoyage;
 	}
-	
+	public String getEtat() {
+		return etat;
+	}
+	public void setEtat(String etat) {
+		this.etat = etat;
+	}
+	public float getTotal() {
+		return ((nbNuit*montantNuit) + (montantTransport) +(montantVoyage));
+	}
+	public void setTotal(float total) {
+		this.total = total;
+	}
 	
 }

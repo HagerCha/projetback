@@ -12,19 +12,13 @@ public class DemandeNDFRequest {
 	private String nom;
 	
 	@NotBlank
-	private String numMission;
+	private int numMission;
 	
 	@NotBlank
 	private float nbNuit;
 	
 	@NotBlank
 	private float montantNuit;
-	
-	@NotBlank
-	private float montantDP;
-	
-	@NotBlank
-	private float montantPC;
 	
 	@NotBlank
 	private String transport;
@@ -43,6 +37,12 @@ public class DemandeNDFRequest {
 	
 	@NotBlank
 	private float montantVoyage;
+	
+	@NotBlank
+	private float total;
+	
+	@NotBlank
+	private String etat ;
 
 	public Long getIdNDF() {
 		return idNDF;
@@ -60,11 +60,11 @@ public class DemandeNDFRequest {
 		this.nom = nom;
 	}
 
-	public String getNumMission() {
+	public int getNumMission() {
 		return numMission;
 	}
 
-	public void setNumMission(String numMission) {
+	public void setNumMission(int numMission) {
 		this.numMission = numMission;
 	}
 
@@ -83,22 +83,6 @@ public class DemandeNDFRequest {
 
 	public void setMontantNuit(float montantNuit) {
 		this.montantNuit = montantNuit;
-	}
-
-	public float getMontantDP() {
-		return montantDP;
-	}
-
-	public void setMontantDP(float montantDP) {
-		this.montantDP = montantDP;
-	}
-
-	public float getMontantPC() {
-		return montantPC;
-	}
-
-	public void setMontantPC(float montantPC) {
-		this.montantPC = montantPC;
 	}
 
 	public String getTransport() {
@@ -147,6 +131,22 @@ public class DemandeNDFRequest {
 
 	public void setMontantVoyage(float montantVoyage) {
 		this.montantVoyage = montantVoyage;
+	}
+
+	public float getTotal() {
+		return ((nbNuit*montantNuit) + (montantTransport) +(montantVoyage));
+	}
+
+	public void setTotal(float total) {
+		this.total = total;
+	}
+
+	public String getEtat() {
+		return etat;
+	}
+
+	public void setEtat(String etat) {
+		this.etat = etat;
 	}
 	
 	

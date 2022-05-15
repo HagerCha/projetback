@@ -25,10 +25,6 @@ public class User {
 
   @NotBlank
   @Size(max = 50)
-  private String roleUtilisateur;
-  
-  @NotBlank
-  @Size(max = 50)
   @Email
   private String email;
   
@@ -57,14 +53,13 @@ public class User {
   public User() {
   }
 
-  public User(String username, String email, String password, String nom, String prenom, String passport, String roleUtilisateur) {
+  public User(String username, String email, String password, String nom, String prenom, String passport) {
     this.username = username;
     this.email = email;
     this.password = password;
     this.passport = passport;
     this.nom = nom;
     this.prenom = prenom;
-    this.roleUtilisateur = roleUtilisateur;
   }
 
   public Long getId() {
@@ -131,12 +126,5 @@ public void setPassport(String passport) {
 	this.passport = passport;
 }
 
-public String getRoleUtilisateur() {
-	return roleUtilisateur;
-}
-
-public void setRoleUtilisateur(String roleUtilisateur) {
-	this.roleUtilisateur = roleUtilisateur;
-}
 
 }
