@@ -73,7 +73,7 @@ public class AuthController {
                          userDetails.getId(), 
                          userDetails.getUsername(),
                          userDetails.getEmail(),
-                         roles, null, null, jwt));
+                         roles, userDetails.getNom(), userDetails.getPrenom(), userDetails.getPassport()));
   }
 
   
@@ -178,8 +178,6 @@ public class AuthController {
       
     return userRepository.save(user);
 
-
-   // return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }
 
 
@@ -210,7 +208,7 @@ public class AuthController {
 
 //supprimer user
   @DeleteMapping ("/DeleteUser/{idUser}")
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  //@PreAuthorize("hasRole('ROLE_ADMIN')")
   public String deleteUser(@PathVariable Long idUser) throws NotFoundException {
       return userRepository.findById(idUser)
               .map(mission -> {
