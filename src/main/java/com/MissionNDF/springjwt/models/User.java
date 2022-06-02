@@ -1,5 +1,6 @@
 package com.MissionNDF.springjwt.models;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +20,6 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank
   @Size(max = 50)
   private String username;
 
@@ -28,7 +28,6 @@ public class User {
   @Email
   private String email;
   
-  @NotBlank
   @Size(max = 120)
   private String password;
 
@@ -43,6 +42,7 @@ public class User {
   @NotBlank
   @Size(max = 120)
   private String passport;
+  
 
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(  name = "user_roles", 
@@ -53,13 +53,14 @@ public class User {
   public User() {
   }
 
-  public User(String username, String email, String password, String nom, String prenom, String passport) {
+  public User(String username, String email, String password, String nom, String prenom, String passport){
     this.username = username;
     this.email = email;
     this.password = password;
     this.passport = passport;
     this.nom = nom;
     this.prenom = prenom;
+    
   }
 
   public Long getId() {

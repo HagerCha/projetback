@@ -1,5 +1,6 @@
 package com.MissionNDF.springjwt.security.services;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -28,12 +29,13 @@ public class UserDetailsImpl implements UserDetails {
   private String passport;
   
   
+  
   @JsonIgnore
   private String password;
 
   private Collection<? extends GrantedAuthority> authorities;
 
-  public UserDetailsImpl(Long id, String username, String email, String password, String nom, String prenom, String passport,
+  public UserDetailsImpl(Long id, String username, String email, String password, String nom, String prenom, String passport, 
       Collection<? extends GrantedAuthority> authorities) {
     this.id = id;
     this.username = username;
@@ -109,6 +111,8 @@ public String getPassport() {
 public void setPassport(String passport) {
 	this.passport = passport;
 }
+
+
 
 @Override
   public boolean isAccountNonExpired() {

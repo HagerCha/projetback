@@ -4,7 +4,6 @@ import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
 
-	@NotBlank
   private String username;
 
 	public String getUsername() {
@@ -16,7 +15,6 @@ public class LoginRequest {
 	}
 
 
-	@NotBlank
 	private String password;
 
 	public String getPassword() {

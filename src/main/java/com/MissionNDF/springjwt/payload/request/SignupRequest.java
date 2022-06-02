@@ -1,8 +1,11 @@
 package com.MissionNDF.springjwt.payload.request;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import javax.validation.constraints.*;
+
+import net.bytebuddy.asm.Advice.Local;
 
 public class SignupRequest {
   @NotBlank
@@ -19,6 +22,7 @@ public class SignupRequest {
   private String passport;
 
 
+
 @NotBlank
   @Size(max = 50)
   @Email
@@ -26,7 +30,6 @@ public class SignupRequest {
 
   private Set<String> role;
 
-  @NotBlank
   @Size(min = 6, max = 40)
   private String password;
 
@@ -83,5 +86,7 @@ public void setPassport(String passport) {
   public void setRole(Set<String> role) {
     this.role = role;
   }
+
+
   
 }

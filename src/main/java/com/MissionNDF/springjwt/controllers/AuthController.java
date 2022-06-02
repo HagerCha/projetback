@@ -72,8 +72,8 @@ public class AuthController {
     return ResponseEntity.ok(new JwtResponse(jwt, 
                          userDetails.getId(), 
                          userDetails.getUsername(),
-                         userDetails.getEmail(),
-                         roles, userDetails.getNom(), userDetails.getPrenom(), userDetails.getPassport()));
+                         userDetails.getEmail(), roles, userDetails.getNom(), userDetails.getPrenom(),
+                         userDetails.getPassport()));
   }
 
   
@@ -86,43 +86,7 @@ public class AuthController {
     User user = new User(signUpRequest.getEmail(), signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()),
     		signUpRequest.getNom(), signUpRequest.getPrenom(), signUpRequest.getPassport());
     
-    
-    /*String strRole = signUpRequest.getRoleUtilisateur();
-    Set<Role> roles = new HashSet<>();
-    switch (strRole.toUpperCase()) {
-    case "ADMIN":
-      Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-          .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-      roles.add(adminRole);
-
-      break;
-  
-    case "MANAGER":
-        Role managerRole = roleRepository.findByName(ERole.ROLE_MANAGER)
-            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        roles.add(managerRole);
-
-        break;
-    case "GESTIONNAIRE DE PAIE":
-        Role paieRole = roleRepository.findByName(ERole.ROLE_PAIE)
-            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        roles.add(paieRole);
-
-        break;
-    case "ASSISTANT DE RESERVATION":
-      Role assistRole = roleRepository.findByName(ERole.ROLE_ASSIST)
-          .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-      roles.add(assistRole);
-
-      break;
-      case "COLLABORATEUR":
-        Role collaborateurRolee = roleRepository.findByName(ERole.ROLE_COLLABORATEUR)
-                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        roles.add(collaborateurRolee);
-        break;
-    
-    };*/
-      
+          
     
     
     Set<String> strRoles = signUpRequest.getRole();
@@ -197,7 +161,7 @@ public class AuthController {
 //foundById
 
   @GetMapping("/UserByIdUser/{idUser}")
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  //@PreAuthorize("hasRole('ROLE_ADMIN')")
   public Optional<User> getUserByIdUser(@PathVariable Long idUser) throws NotFoundException{
 
       if(!userRepository.existsById(idUser)) {
